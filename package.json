@@ -1,0 +1,19 @@
+{
+  "name": "ssb-mirror",
+  "version": "0.0.1",
+  "description": "A server to host and replicate one SSB feed only",
+  "main": "index.js",
+  "author": "Andre Staltz <contact@staltz.com>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "mkdirp": "~0.5.1",
+    "multiserver": "~3.3.1",
+    "ssb-blobs": "~1.1.13",
+    "ssb-config": "~3.2.5",
+    "ssb-invite": "~2.0.4",
+    "ssb-keys": "~7.1.5",
+    "ssb-legacy-conn": "~1.0.17",
+    "ssb-replicate": "~1.2.1",
+    "ssb-server": "~14.1.9"
+  }
+}
