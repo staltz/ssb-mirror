@@ -6,6 +6,5 @@ config:
   packages:
     - wget
   runcmd:
-    - wget https://raw.githubusercontent.com/staltz/smirror/master/install.sh
+    - wget https://raw.githubusercontent.com/staltz/ssb-mirror/master/install.sh
     - bash install.sh
-
