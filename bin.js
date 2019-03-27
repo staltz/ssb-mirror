@@ -4,7 +4,7 @@ const Client = require('ssb-client');
 const manifest = require('./manifest');
 const config = require('./config');
 
-const lastArgv = process.argv[argv.length - 1];
+const lastArgv = process.argv[process.argv.length - 1];
 
 if (lastArgv === 'start') {
   require('./index');
