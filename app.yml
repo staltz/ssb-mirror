@@ -7,4 +7,5 @@ config:
     - wget
   runcmd:
     - wget https://raw.githubusercontent.com/staltz/smirror/master/install.sh
-- bash install.sh
+    - bash install.sh
+
