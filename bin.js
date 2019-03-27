@@ -21,9 +21,9 @@ if (lastArgv === 'start') {
   };
 
   // connect
-  Client(config.keys, opts, function(err, rpc) {
-    if (err) {
-      if (/could not connect/.test(err.message)) {
+  Client(config.keys, opts, function(err1, rpc) {
+    if (err1) {
+      if (/could not connect/.test(err1.message)) {
         console.error(
           'Error: Could not connect to ssb-server ' +
             opts.host +
@@ -32,12 +32,20 @@ if (lastArgv === 'start') {
         );
         console.error('Use the "start" command to start it.');
         console.error('Use --verbose option to see full error');
-        if (config.verbose) throw err;
+        if (config.verbose) throw err1;
         process.exit(1);
       }
-      throw err;
+      throw err1;
     }
 
-    process.stdout.write(rpc.whoami());
+    rpc.whoami((err2, x) => {
+      if (err2) {
+        console.error(err2);
+        process.exit(1);
+      } else {
+        console.log(x.id);
+        process.exit(0);
+      }
+    });
   });
 }
