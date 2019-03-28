@@ -1,6 +1,6 @@
 {
   "name": "ssb-mirror",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A server to host and replicate one SSB feed only",
   "main": "index.js",
   "bin": "bin.js",
