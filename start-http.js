@@ -26,6 +26,7 @@ module.exports = function startHTTP(ssbServer) {
     const qrCode = qr.svgObject(invite);
     fs.access(feedFilePath, fs.constants.F_OK, doesNotExist => {
       if (doesNotExist) {
+        debug('There is no mirror file, ask for setup');
         res.render('setup', {
           host: host,
           invite: invite,
@@ -33,19 +34,24 @@ module.exports = function startHTTP(ssbServer) {
           qrPath: qrCode.path,
         });
       } else {
+        debug('There is a mirror file');
         ssbServer.about.socialValue(
           {key: 'name', dest: ssbServer.id},
           (err1, name) => {
+            debug('socialValue name: ' + name);
             if (err1) name = null;
             ssbServer.about.socialValue(
               {key: 'image', dest: ssbServer.id},
               (err2, val) => {
+                debug('socialValue image: ' + val);
                 let image = val;
                 if (err2) image = null;
                 if (!!val && typeof val === 'object' && val.link)
                   image = val.link;
 
+                debug('blobs has this image? ' + image);
                 ssbServer.blobs.has(image, (err3, has) => {
+                  debug('has=' + has);
                   if (err3 || !has) image = null;
 
                   res.render('index', {
@@ -70,6 +76,7 @@ module.exports = function startHTTP(ssbServer) {
     ssbServer.about.socialValue(
       {key: 'image', dest: ssbServer.id},
       (err, val) => {
+        debug('socialValue image: ' + val);
         if (err) {
           res.writeHead(404);
           res.end('File not found');
