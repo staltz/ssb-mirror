@@ -47,7 +47,8 @@
         font-size: 17px;
         word-break: break-all;
         overflow-x: hidden;
-        max-width: 280px;
+        width: 280px;
+        max-width: 70vw;
         display: inline-block;
       }
 
@@ -66,6 +67,8 @@
       .avatar {
         width: 280px;
         height: 280px;
+        max-width: 70vw;
+        max-height: 70vw;
         margin-right: 30px;
         background-color: aliceblue;
         border-radius: 3px;
@@ -94,6 +97,9 @@
       }
 
       @media (max-width: 799px) {
+        section {
+          margin: 0 0 40px;
+        }
         .row {
           flex-direction: column;
         }

@@ -12,7 +12,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV DEBUG="*"
 
 USER node
-RUN npm install -g ssb-mirror@0.0.6
+RUN npm install -g ssb-mirror@latest
 
 EXPOSE 8008
 EXPOSE 8007
