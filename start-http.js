@@ -6,6 +6,7 @@ const pull = require('pull-stream');
 const toPull = require('stream-to-pull-stream');
 const ident = require('pull-identify-filetype');
 const qr = require('qr-image');
+const ref = require('ssb-ref');
 const debug = require('debug')('ssb:mirror:http');
 
 module.exports = function startHTTP(ssbServer) {
@@ -20,10 +21,13 @@ module.exports = function startHTTP(ssbServer) {
 
   app.get('/', (_req, res) => {
     const invite = ssbServer.invite.get();
+    const host = ref.parseAddress(ref.parseMultiServerInvite(invite).remote)
+      .host;
     const qrCode = qr.svgObject(invite);
     fs.access(feedFilePath, fs.constants.F_OK, doesNotExist => {
       if (doesNotExist) {
         res.render('setup', {
+          host: host,
           invite: invite,
           qrSize: qrCode.size,
           qrPath: qrCode.path,
@@ -45,6 +49,7 @@ module.exports = function startHTTP(ssbServer) {
                   if (err3 || !has) image = null;
 
                   res.render('index', {
+                    host: host,
                     id: ssbServer.id,
                     name: name,
                     image: image,
@@ -82,14 +87,6 @@ module.exports = function startHTTP(ssbServer) {
         );
       },
     );
-    // ssbServer.blobs.has(hash, function(err, has) {
-    //   if (err) return cb(err);
-    //   if (has) {
-    //     cb(null, has);
-    //   } else {
-    //     ssbServer.blobs.want(hash, cb);
-    //   }
-    // });
   });
 
   return app.listen(app.get('port'), () => {

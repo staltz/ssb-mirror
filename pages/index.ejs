@@ -71,7 +71,7 @@
         border-radius: 3px;
       }
 
-      .invitecode {
+      #invitecode {
         width: 200px;
         height: 200px;
         box-sizing: border-box;
@@ -115,9 +115,9 @@
         <img src="/avatar" class="avatar" />
         <% } else { %>
         <div class="avatar"></div>
-        <% } %> <% if (name) { %>
-        <h1><%= name %></h1>
         <% } %>
+
+        <h1><%= name || '' %></h1>
         <code class="idcode"><%= id %></code>
       </div>
       <div>
@@ -147,7 +147,7 @@
           from this server.
         </p>
         <div class="row" style="margin-top: 20px">
-          <code class="invitecode"><%= invite %></code>
+          <code id="invitecode"><%= invite %></code>
           <div class="or">OR</div>
           <svg
             class="qr-code"
@@ -168,5 +168,14 @@
       <a href="https://github.com/staltz/ssb-mirror">open sourced</a> under the
       <a href="https://opensource.org/licenses/AGPL-3.0">AGPL-3.0</a> license.
     </footer>
+
+    <script>
+      var prev = '' + invitecode.innerText;
+      var next = prev.replace(
+        '<%= host %>',
+        window.location.host.split(':')[0],
+      );
+      invitecode.innerText = next;
+    </script>
   </body>
 </html>

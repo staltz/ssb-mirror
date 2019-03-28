@@ -30,6 +30,7 @@
     "ssb-config": "~3.2.5",
     "ssb-keys": "~7.1.5",
     "ssb-legacy-conn": "~1.0.23",
+    "ssb-ref": "~2.13.9",
     "ssb-replicate": "~1.2.1",
     "ssb-server": "~14.1.9"
   }
