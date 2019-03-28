@@ -9,7 +9,7 @@
   "scripts": {
     "build": "docker build -t staltz/ssb-mirror:$(jq -r .version package.json) .",
     "start": "docker run -it --rm staltz/ssb-mirror",
-    "publish": "docker push staltz/ssb-mirror"
+    "publish-docker": "docker push staltz/ssb-mirror"
   },
   "dependencies": {
     "mkdirp": "~0.5.1",
