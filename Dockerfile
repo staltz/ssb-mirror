@@ -15,7 +15,7 @@ USER node
 RUN npm install -g ssb-mirror@0.0.1
 
 EXPOSE 8008
-EXPOSE 80
+EXPOSE 8007
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=10s --retries=10 \
   CMD ssb-mirror check || exit 1

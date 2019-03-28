@@ -33,7 +33,7 @@ memory_limit=$(($(free -b --si | awk '/Mem\:/ { print $2 }') - 200*(10**6)))
 docker run -d --name sbot \
    -v ~/ssb-mirror-data/:/home/node/.ssb/ \
    -p 8008:8008 \
-   -p 80:80 \
+   -p 80:8007 \
    --restart unless-stopped \
    --memory "\$memory_limit" \
    staltz/ssb-mirror
