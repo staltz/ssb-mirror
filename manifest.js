@@ -66,4 +66,20 @@ module.exports = {
     changes: 'source',
     createWants: 'source',
   },
+  backlinks: {
+    read: 'source',
+  },
+  about: {
+    socialValue: 'async',
+    latestValue: 'async',
+    socialValues: 'async',
+    latestValues: 'async',
+    socialValueStream: 'source',
+    socialValuesStream: 'source',
+    latestValueStream: 'source',
+    read: 'source',
+  },
+  query: {
+    read: 'source',
+  },
 };
