@@ -5,4 +5,4 @@ http
   .createServer((req, res) => {
     res.end(JSON.stringify({invite: ssbServer.invite.get()}));
   })
-  .listen(8007);
+  .listen(80);
