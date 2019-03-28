@@ -1,8 +1,5 @@
-const http = require('http');
-const ssbServer = require('./start-ssb');
+const startSSB = require('./start-ssb');
+const startHTTP = require('./start-http');
 
-http
-  .createServer((req, res) => {
-    res.end(JSON.stringify({invite: ssbServer.invite.get()}));
-  })
-  .listen(8007);
+const ssbServer = startSSB();
+startHTTP(ssbServer);
