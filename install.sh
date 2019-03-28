@@ -26,6 +26,11 @@ docker pull staltz/ssb-mirror
 mkdir ~/ssb-mirror-data
 chown -R 1000:1000 ~/ssb-mirror-data
 
+#
+# Redirect internal 8007 to external 80
+#
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8007
+
 # create ./create-sbot script
 cat > ./create-sbot <<EOF
 #!/bin/bash
