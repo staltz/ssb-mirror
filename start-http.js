@@ -35,47 +35,54 @@ module.exports = function startHTTP(ssbServer) {
         });
       } else {
         debug('There is a mirror file');
-        ssbServer.about.socialValue(
-          {key: 'name', dest: ssbServer.id},
-          (err1, name) => {
-            debug('socialValue name: ' + name);
-            if (err1) name = null;
-            ssbServer.about.socialValue(
-              {key: 'image', dest: ssbServer.id},
-              (err2, val) => {
-                debug('socialValue image: ' + val);
-                let image = val;
-                if (err2) image = null;
-                if (!!val && typeof val === 'object' && val.link)
-                  image = val.link;
+        fs.readFile(feedFilePath, {encoding: 'utf-8'}, (err1, feed) => {
+          if (err1) {
+            debug('ERROR loading mirror file');
+            feed = ssbServer.id;
+          }
+          debug('The target feed: ' + feed);
+          ssbServer.about.socialValue(
+            {key: 'name', dest: feed},
+            (err2, name) => {
+              debug('socialValue name: ' + name);
+              if (err2) name = null;
+              ssbServer.about.socialValue(
+                {key: 'image', dest: feed},
+                (err3, val) => {
+                  debug('socialValue image: ' + val);
+                  let image = val;
+                  if (err3) image = null;
+                  if (!!val && typeof val === 'object' && val.link)
+                    image = val.link;
 
-                debug('blobs has this image? ' + image);
-                ssbServer.blobs.has(image, (err3, has) => {
-                  debug('has=' + has);
-                  if (err3 || !has) image = null;
+                  debug('blobs has this image? ' + image);
+                  ssbServer.blobs.has(image, (err3, has) => {
+                    debug('has=' + has);
+                    if (err3 || !has) image = null;
 
-                  res.render('index', {
-                    host: host,
-                    id: ssbServer.id,
-                    name: name,
-                    image: image,
-                    invite: invite,
-                    qrSize: qrCode.size,
-                    qrPath: qrCode.path,
+                    res.render('index', {
+                      host: host,
+                      id: feed,
+                      name: name,
+                      image: image,
+                      invite: invite,
+                      qrSize: qrCode.size,
+                      qrPath: qrCode.path,
+                    });
                   });
-                });
-              },
-            );
-          },
-        );
+                },
+              );
+            },
+          );
+        });
       }
     });
   });
 
   app.get('/avatar', (req, res) => {
-    ssbServer.about.socialValue(
-      {key: 'image', dest: ssbServer.id},
-      (err, val) => {
+    fs.readFile(feedFilePath, {encoding: 'utf-8'}, (err1, feed) => {
+      if (err1) feed = ssbServer.id;
+      ssbServer.about.socialValue({key: 'image', dest: feed}, (err, val) => {
         debug('socialValue image: ' + val);
         if (err) {
           res.writeHead(404);
@@ -92,8 +99,8 @@ module.exports = function startHTTP(ssbServer) {
           }),
           toPull.sink(res),
         );
-      },
-    );
+      });
+    });
   });
 
   return app.listen(app.get('port'), () => {
